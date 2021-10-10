@@ -7,26 +7,39 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.Date;
 
 
 public class HTTPRequest {
     ObjectMapper mapper = new ObjectMapper()
-  .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//request for all the tickers
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    //request for all the tickers
     //https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/TICKERS?api_key=Gzvm_pfh2kYxk6TgejHS&qopts.
     OkHttpClient okHttpClient = new OkHttpClient();
     //candidate request
     //https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?api_key=Gzvm_pfh2kYxk6TgejHS&ticker=XOM&qopts.columns=ticker,date,open,high,low,close,volume&date.gt=2017-10-27
-    String url = "https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?api_key=Gzvm_pfh2kYxk6TgejHS&ticker=XOM&qopts.columns=ticker,date,open,high,low,close,volume";
-           // "&date.gt=2017-10-27";
-            //"https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?api_key=Gzvm_pfh2kYxk6TgejHS&qopts&ticker=SPY&columns=ticker,date,open,high,low,close,volume";
-            //"https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/TICKERS?api_key=Gzvm_pfh2kYxk6TgejHS&qopts.export=true";
-            //"https://data.nasdaq.com/api/v3/datatables/ETFG/FUND.json?ticker=SPY&api_key=YOURAPIKEY";
+   //////////////////// String url = "https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?api_key=Gzvm_pfh2kYxk6TgejHS&ticker=AAPL&qopts.columns=ticker,date,open,high,low,close,volume";
+    // "&date.gt=2017-10-27";
+    //"https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?api_key=Gzvm_pfh2kYxk6TgejHS&qopts&ticker=SPY&columns=ticker,date,open,high,low,close,volume";
+    //"https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/TICKERS?api_key=Gzvm_pfh2kYxk6TgejHS&qopts.export=true";
+    //"https://data.nasdaq.com/api/v3/datatables/ETFG/FUND.json?ticker=SPY&api_key=YOURAPIKEY";
     //https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?date=2017-10-31%2C2017-10-30%2C2017-10-27&ticker=XOM%2CWMT%2CVZ&api_key=Gzvm_pfh2kYxk6TgejHS
     Response response;
     ResponseJSON responseJSON;
 
-    public String[][] send() {
+    public String buildRequestURL(String selectedTicket, Date startDate, Date endDate){
+        StringBuilder builtUrl =new StringBuilder("https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?api_key=Gzvm_pfh2kYxk6TgejHS&&qopts.columns=ticker,date,open,high,low,close,volumeticker=");
+        builtUrl.append(selectedTicket);
+        builtUrl.append("&date.gt=");
+        builtUrl.append(startDate);
+        builtUrl.append("&date.lt=");
+        builtUrl.append(endDate);
+
+
+        return builtUrl.toString();
+    }
+
+    public String[][] send(String url) {
         Request request = new Request.Builder().
                 url(url).build();
 
