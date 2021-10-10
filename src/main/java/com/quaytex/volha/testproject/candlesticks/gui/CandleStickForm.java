@@ -36,7 +36,7 @@ public class CandleStickForm {
 
     private static void drawForm() {
 
-        topPanel.add(new Label("Ticket"));
+        topPanel.add(new Label("Stock Ticket"));
         String[][] availableTickersData = httpRequest.send("https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/TICKERS?api_key=Gzvm_pfh2kYxk6TgejHS&qopts");
         String[] availableTickers = new String[availableTickersData.length];
         for ( int i = 0; i < availableTickersData.length; i++ ) {
@@ -57,7 +57,7 @@ public class CandleStickForm {
         final JDatePickerImpl datePicker2 = new JDatePickerImpl(datePanel2);
         topPanel.add(datePicker2);
 
-        topPanel.add(new JButton(new AbstractAction("Draw") {
+        topPanel.add(new JButton(new AbstractAction("Refresh Charts") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onDraw(ticketList, datePicker1, datePicker2);
