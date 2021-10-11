@@ -5,7 +5,7 @@ import com.sun.org.apache.xml.internal.serialize.LineSeparator;
 import java.util.Arrays;
 
 public class ResponseJSONPrices {
-    String[][] data;
+    private String[][] data;
 
     public String[][] getData() {
         return data;

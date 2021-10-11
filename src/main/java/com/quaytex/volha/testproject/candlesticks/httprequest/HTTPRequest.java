@@ -14,9 +14,9 @@ public class HTTPRequest {
     private final String NASDAQ_PRICES_REQUEST = "https://data.nasdaq.com/api/v3/datatables/QUOTEMEDIA/PRICES?api_key=Gzvm_pfh2kYxk6TgejHS&&qopts.columns=ticker,date,open,high,low,close,volume&ticker=";
     ObjectMapper mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    OkHttpClient okHttpClient = new OkHttpClient();
-    Response response;
-    ResponseJSON responseJSON;
+    private OkHttpClient okHttpClient = new OkHttpClient();
+    private Response response;
+    private ResponseJSON responseJSON;
 
     public String buildRequestURL(String selectedTicket, Date startDate, Date endDate) {
         StringBuilder builtUrl = new StringBuilder(NASDAQ_PRICES_REQUEST);

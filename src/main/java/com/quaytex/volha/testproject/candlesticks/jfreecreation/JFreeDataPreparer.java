@@ -10,8 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class JFreeDataPreparer {
-    String[][] pricesTable;
-
+    
     public DataSets createDatasets(String[][] pricesTable) throws NoDataException {
         DataSets dataSets = new DataSets();
         final String DATASET_NAME = "USEndOfDayPrices";

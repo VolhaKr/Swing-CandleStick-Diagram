@@ -1,7 +1,7 @@
 package com.quaytex.volha.testproject.candlesticks.httprequest;
 
 public class ResponseJSON {
-    ResponseJSONPrices datatable;
+    private ResponseJSONPrices datatable;
 
     public ResponseJSONPrices getDatatable() {
         return datatable;

@@ -4,8 +4,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.OHLCDataset;
 
 public class DataSets {
-    OHLCDataset candlestickDataSet;
-    DefaultCategoryDataset barDataSet;
+    private OHLCDataset candlestickDataSet;
+    private DefaultCategoryDataset barDataSet;
 
     public OHLCDataset getCandlestickDataSet() {
         return candlestickDataSet;
