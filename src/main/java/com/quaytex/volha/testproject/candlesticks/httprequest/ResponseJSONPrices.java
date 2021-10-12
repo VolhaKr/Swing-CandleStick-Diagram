@@ -1,9 +1,5 @@
 package com.quaytex.volha.testproject.candlesticks.httprequest;
 
-import com.sun.org.apache.xml.internal.serialize.LineSeparator;
-
-import java.util.Arrays;
-
 public class ResponseJSONPrices {
     private String[][] data;
 
@@ -17,16 +13,16 @@ public class ResponseJSONPrices {
 
     @Override
     public String toString() {
-        StringBuilder buildString= new StringBuilder("");
-        for ( String [] d: data ){
-            for (String dE:d){
-                buildString.append(dE).append(",");
+        StringBuilder buildString = new StringBuilder("");
+        for ( String[] d : data ) {
+            for ( String dataElement : d ) {
+                buildString.append(dataElement).append(",");
             }
-            buildString.append(System.lineSeparator() );
+            buildString.append(System.lineSeparator());
         }
         return "ResponseJSONPrices{" +
                 "data=" +
                 buildString.toString()
-                +'}';
+                + '}';
     }
 }

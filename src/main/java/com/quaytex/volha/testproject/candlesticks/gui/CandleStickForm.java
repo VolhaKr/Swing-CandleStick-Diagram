@@ -1,15 +1,11 @@
 package com.quaytex.volha.testproject.candlesticks.gui;
 
-import com.quaytex.volha.testproject.candlesticks.exceptions.NoDataException;
+import com.quaytex.volha.testproject.candlesticks.SwingWorkerManager;
 import com.quaytex.volha.testproject.candlesticks.httprequest.HTTPRequest;
-import com.quaytex.volha.testproject.candlesticks.jfreecreation.DataSets;
-import com.quaytex.volha.testproject.candlesticks.jfreecreation.JFreeDataPreparer;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,11 +18,10 @@ public class CandleStickForm {
     private static JPanel topPanel = new JPanel();
     private static HTTPRequest httpRequest = new HTTPRequest();
 
-    public static void main(String[] args) {
-        frame = new JFrame("Drawing CandleStick");
+    public CandleStickForm(JFrame frame) {
+        this.frame = frame;
         frame.setPreferredSize(new Dimension(800, 600));
-        CandleStickForm candleStickForm = new CandleStickForm();
-        frame.setContentPane(candleStickForm.rootPanel);
+        frame.setContentPane(CandleStickForm.rootPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -69,46 +64,19 @@ public class CandleStickForm {
         frame.repaint();
         rootPanel.repaint();
         SwingUtilities.updateComponentTreeUI(frame);
-
     }
 
     private static void onDraw(JComboBox<String> ticketList, JDatePickerImpl datePicker1, JDatePickerImpl datePicker2) {
         String selectedTicket = (String) ticketList.getSelectedItem();
         Date startDate = (Date) datePicker1.getModel().getValue();
         Date endDate = (Date) datePicker2.getModel().getValue();
-        DataSets dataSets = new DataSets();
 
         if (startDate.compareTo(endDate) > 0) {
             JOptionPane.showMessageDialog(frame, "End Date cannot be earlier than Start Date");
         } else {
-            String url = httpRequest.buildRequestURL(selectedTicket, startDate, endDate);
-            JFreeDataPreparer jFreeDataPreparer = new JFreeDataPreparer();
 
-            try {
-                dataSets = jFreeDataPreparer.createDatasets(httpRequest.send(url));
-            } catch (NoDataException e) {
-                JOptionPane.showMessageDialog(frame, e.getMessage());
-            }
-
-            JPanel candleStickPanel = new JPanel();
-            final Dimension CHART_DIMENTION = new Dimension(800, 500);
-            candleStickPanel.setPreferredSize(CHART_DIMENTION);
-            JFreeChart chart = null;
-            chart = ChartFactory.createCandlestickChart("US End Of Day Candlestick", "Date", "Volume, Prices", dataSets.getCandlestickDataSet(), true);
-            final ChartPanel chartPanel = new ChartPanel(chart);
-            chartPanel.setPreferredSize(new Dimension(CHART_DIMENTION));
-            candleStickPanel.add(chartPanel);
-            frame.add(candleStickPanel, BorderLayout.CENTER);
-
-
-            JPanel barPanel = new JPanel();
-            JFreeChart barChart = null;
-            barChart = ChartFactory.createBarChart("Date Volumes Bar Chart", "Date", "Volume", dataSets.getBarDataSet());
-            final ChartPanel barChartPanel = new ChartPanel(barChart);
-            barChartPanel.setPreferredSize(CHART_DIMENTION);
-            barPanel.add(barChartPanel);
-            frame.add(barPanel, BorderLayout.SOUTH);
-            SwingUtilities.updateComponentTreeUI(frame);
+            SwingWorkerManager swingWorkerManagerThread = new SwingWorkerManager();
+            swingWorkerManagerThread.startThread(selectedTicket, startDate, endDate, frame);
         }
     }
 }

@@ -6,6 +6,7 @@ public class ResponseJSON {
     public ResponseJSONPrices getDatatable() {
         return datatable;
     }
+
     public void setDatatable(ResponseJSONPrices datatable) {
         this.datatable = datatable;
     }

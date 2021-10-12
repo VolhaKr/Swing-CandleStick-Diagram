@@ -10,11 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class JFreeDataPreparer {
-    
+
     public DataSets createDatasets(String[][] pricesTable) throws NoDataException {
         DataSets dataSets = new DataSets();
         final String DATASET_NAME = "USEndOfDayPrices";
-/*
+/*  json format of data in the responsed String
           {
                 "name": "ticker",
                 "type": "text"
@@ -68,6 +68,8 @@ public class JFreeDataPreparer {
             lows[i] = Double.parseDouble(pricesTable[i][4]);
             closes[i] = Double.parseDouble(pricesTable[i][5]);
             volumes[i] = Double.parseDouble(pricesTable[i][6]);
+        }
+        for ( int i = numberOfRecords - 1; i >= 0; i-- ) {
             barDataset.setValue(volumes[i], "Volume", datesForBar[i]);
         }
         OHLCDataset candlestickDataSet = new DefaultHighLowDataset(DATASET_NAME, dates, highs, lows, opens, closes, volumes);

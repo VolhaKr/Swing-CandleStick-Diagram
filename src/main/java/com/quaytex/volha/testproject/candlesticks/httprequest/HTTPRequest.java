@@ -28,9 +28,9 @@ public class HTTPRequest {
         return builtUrl.toString();
     }
 
-    public String[][] send(String url) {
+    public String[][] send(String builtUrl) {
         Request request = new Request.Builder().
-                url(url).build();
+                url(builtUrl).build();
         try {
             response = okHttpClient.newCall(request).execute();
         } catch (
